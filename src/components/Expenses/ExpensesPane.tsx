@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { indigo } from '@mui/material/colors';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,10 +11,19 @@ import AddIcon from '@mui/icons-material/Add';
 
 import { AppState } from '@app/store/states/AppState';
 import { isPresent } from '@app/entities/service/Nullable';
+import { Expense, getDefaultExpense } from '@app/entities/Expense';
+import { ExpenseItem } from '@app/components/Expenses/ExpenseItem';
+import { WithId } from '@app/entities/service/WithId';
+import { listActionFactory } from '@app/store/actions/ListActions';
 
 export const ExpensesPane: React.FC = () => {
 	const card = useSelector((state: AppState) => state.card.item);
+	const expenses = useSelector((state: AppState) => state.expenses.list);
+	const dispatch = useDispatch();
+
 	if (!isPresent(card)) return null;
+
+	const list = expenses.filter((item: Expense) => item.cardId === card.id);
 
 	return (
 		<Box
@@ -46,12 +55,32 @@ export const ExpensesPane: React.FC = () => {
 						color: indigo['50'],
 					}}
 					startIcon={<AddIcon />}
+					onClick={() => {
+						if (!isPresent(card)) return;
+
+						dispatch(listActionFactory('expenses').push(getDefaultExpense(card.id)));
+					}}
 				>
 					Добавить
 				</Button>
 			</Toolbar>
 			<Box sx={{ p: 2 }}>
-				Траты
+				{
+					list.length ? (
+						list.map((item: Expense) => (
+							<ExpenseItem
+								key={item.id}
+								item={item}
+								onChange={(item: Partial<Expense> & WithId) => {
+									dispatch(listActionFactory('expenses').update(item));
+								}}
+								onDelete={() => {
+									dispatch(listActionFactory('expenses').remove(item.id));
+								}}
+							/>
+						))
+					) : <Typography>Список трат пуст</Typography>
+				}
 			</Box>
 		</Box>
 	);

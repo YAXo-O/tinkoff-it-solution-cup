@@ -18,7 +18,7 @@ import { isPresent } from '@app/entities/service/Nullable';
 import { itemActionFactory } from '@app/store/actions/ItemActions';
 import { CardPane } from '@app/components/Cards/CardPane';
 import { listActionFactory } from '@app/store/actions/ListActions';
-import { ExpensesPane } from '@app/components/Expanses/ExpensesPane';
+import { ExpensesPane } from '@app/components/Expenses/ExpensesPane';
 
 export const LayoutScreen: React.FC = () => {
 	const user = useSelector((state: AppState) => state.user.item);
