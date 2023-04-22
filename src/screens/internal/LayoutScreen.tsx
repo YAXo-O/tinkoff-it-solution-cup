@@ -7,13 +7,16 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { lightBlue, indigo } from '@mui/material/colors';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 
 import LogoutIcon from '@mui/icons-material/Logout';
+import { lightBlue, indigo } from '@mui/material/colors';
 
 import { AppState } from '@app/store/states/AppState';
-import { isPresent } from '@app/entities/Nullable';
+import { isPresent } from '@app/entities/service/Nullable';
 import { itemActionFactory } from '@app/store/actions/ItemActions';
+import { CardPane } from '@app/components/Cards/CardPane';
 
 export const LayoutScreen: React.FC = () => {
 	const user = useSelector((state: AppState) => state.user.item);
@@ -22,37 +25,49 @@ export const LayoutScreen: React.FC = () => {
 	if (!isPresent(user)) return null;
 
 	return (
-		<Box sx={{ flexGrow: 1 }}>
-			<AppBar position="fixed" sx={{ backgroundColor: indigo['800'] }}>
-				<Toolbar>
-					<Typography variant="h5">
-						Учёт Расходов
-					</Typography>
-					<Box sx={{ flex: 1 }} />
-					<Stack direction="column" spacing={1}>
-						<Typography
-							sx={{
-								color: '#fff',
-								px: 1,
-							}}
-						>
-							{user.firstName} {user.lastName}
+		<>
+			<Box sx={{ flexGrow: 1 }}>
+				<AppBar position="fixed" sx={{ backgroundColor: indigo['800'] }}>
+					<Toolbar>
+						<Typography variant="h5">
+							Учёт Расходов
 						</Typography>
-						<Button
-							variant="text"
-							size="small"
-							sx={{
-								color: lightBlue['50'],
-								px: 1,
-							}}
-							startIcon={<LogoutIcon />}
-							onClick={() => dispatch(itemActionFactory.clear())}
-						>
-							Сменить пользователя
-						</Button>
-					</Stack>
-				</Toolbar>
-			</AppBar>
-		</Box>
+						<Box sx={{ flex: 1 }} />
+						<Stack direction="column" spacing={1}>
+							<Typography
+								sx={{
+									color: '#fff',
+									px: 1,
+								}}
+							>
+								{user.firstName} {user.lastName}
+							</Typography>
+							<Button
+								variant="text"
+								size="small"
+								sx={{
+									color: lightBlue['50'],
+									px: 1,
+								}}
+								startIcon={<LogoutIcon />}
+								onClick={() => dispatch(itemActionFactory.clear())}
+							>
+								Сменить пользователя
+							</Button>
+						</Stack>
+					</Toolbar>
+				</AppBar>
+			</Box>
+			<Container sx={{ mt: 8, p: 2 }}>
+				<Grid container spacing={4}>
+					<Grid item xs={12} md={6}>
+						<CardPane />
+					</Grid>
+					<Grid item xs={12} md={6}>
+						<CardPane />
+					</Grid>
+				</Grid>
+			</Container>
+		</>
 	);
 };

@@ -2,7 +2,7 @@ import { Action } from 'redux';
 
 import { ItemState } from '@app/store/states/ItemState';
 import { isItemAction, ItemActionType } from '@app/store/actions/ItemActions';
-import { isPresent, Optional } from '@app/entities/Nullable';
+import { isPresent, Optional } from '@app/entities/service/Nullable';
 
 export function itemReducer<T>(_state: Optional<ItemState<T>>, action: Action): ItemState<T> {
 	const state: ItemState<T> = _state ?? { item: null };
