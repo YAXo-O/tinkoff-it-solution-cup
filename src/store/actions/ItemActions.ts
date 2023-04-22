@@ -35,9 +35,9 @@ export type ItemAction<T> = SetItemAction<T> | UpdateItemAction<T> | ClearItemAc
 
 export function isItemAction<T>(action: ItemAction<T> | unknown): action is ItemAction<T> {
 	return (
-		action.type === ItemActionType.Set
-		|| action.type === ItemActionType.Update
-		|| action.type === ItemActionType.Clear
+		(action as ItemAction<T>).type === ItemActionType.Set
+		|| (action as ItemAction<T>).type === ItemActionType.Update
+		|| (action as ItemAction<T>).type === ItemActionType.Clear
 	);
 }
 

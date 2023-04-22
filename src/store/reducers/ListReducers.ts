@@ -2,13 +2,11 @@ import { Action } from 'redux';
 
 import { Optional } from '@app/entities/service/Nullable';
 import { ListState } from '@app/store/states/ListState';
-import { isListAction, ListActionType } from '@app/store/actions/ListActions';
+import { isListAction, ListActionType, ListAction } from '@app/store/actions/ListActions';
 import { WithId } from '@app/entities/service/WithId';
+import { AppState } from '@app/store/states/AppState';
 
-export function listReducer<T extends WithId>(_state: Optional<ListState<T>>, action: Action): ListState<T> {
-	const state: ListState<T> = _state ?? { list: [] };
-	if (!isListAction<T>(action)) return state;
-
+function listReducer<T extends WithId>(state: ListState<T>, action: ListAction<T>): ListState<T> {
 	switch (action.type) {
 	case ListActionType.Push:
 		return {
@@ -40,4 +38,15 @@ export function listReducer<T extends WithId>(_state: Optional<ListState<T>>, ac
 	default:
 		return state;
 	}
+}
+
+export function listReducerFactory<T extends WithId>(store: keyof AppState) {
+	return (_state: Optional<ListState<T>>, action: Action) => {
+		const state: ListState<T> = _state ?? { list: [] };
+		if (!isListAction<T>(action)) return state;
+
+		if (store !== action.store) return state;
+
+		return listReducer<T>(state, action);
+	};
 }

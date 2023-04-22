@@ -12,7 +12,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { AppState } from '@app/store/states/AppState';
 import { isPresent } from '@app/entities/service/Nullable';
 
-export const ExpansesPane: React.FC = () => {
+export const ExpensesPane: React.FC = () => {
 	const card = useSelector((state: AppState) => state.card.item);
 	if (!isPresent(card)) return null;
 

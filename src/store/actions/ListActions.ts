@@ -1,4 +1,5 @@
 import { WithId } from '@app/entities/service/WithId';
+import { AppState } from '@app/store/states/AppState';
 
 export enum ListActionType {
 	Push = 'LA_PUSH',
@@ -10,20 +11,24 @@ export enum ListActionType {
 export interface PushListAction<T extends WithId> {
 	item: T;
 	type: ListActionType.Push;
+	store: keyof AppState;
 }
 
 export interface UpdateListAction<T extends WithId> {
 	item: Partial<T> & WithId;
 	type: ListActionType.Update;
+	store: keyof AppState;
 }
 
 export interface RemoveListAction {
 	id: string;
 	type: ListActionType.Remove;
+	store: keyof AppState;
 }
 
 export interface ClearListAction {
 	type: ListActionType.Clear;
+	store: keyof AppState;
 }
 
 export interface ListActionFactory {
@@ -35,29 +40,35 @@ export interface ListActionFactory {
 
 export type ListAction<T extends WithId> = PushListAction<T> | UpdateListAction<T> | RemoveListAction | ClearListAction;
 
-export function isListAction<T extends WithId>(action: ListAction<T> | never): action is ListAction<T> {
+export function isListAction<T extends WithId>(action: ListAction<T> | unknown): action is ListAction<T> {
 	return (
-		action.type === ListActionType.Push
-		|| action.type === ListActionType.Update
-		|| action.type === ListActionType.Remove
-		|| action.type === ListActionType.Clear
+		(action as ListAction<T>).type === ListActionType.Push
+		|| (action as ListAction<T>).type === ListActionType.Update
+		|| (action as ListAction<T>).type === ListActionType.Remove
+		|| (action as ListAction<T>).type === ListActionType.Clear
 	);
 }
 
-export const listActionFactory: ListActionFactory = {
-	push: <T extends WithId>(item: T) => ({
-		item,
-		type: ListActionType.Push,
-	}),
-	update: <T extends WithId>(item: Partial<T> & WithId) => ({
-		item,
-		type: ListActionType.Update,
-	}),
-	remove: (id: string) => ({
-		id,
-		type: ListActionType.Remove,
-	}),
-	clear: () => ({
-		type: ListActionType.Clear,
-	}),
-};
+export function listActionFactory(store: keyof AppState): ListActionFactory {
+	return {
+		push: <T extends WithId>(item: T) => ({
+			item,
+			type: ListActionType.Push,
+			store,
+		}),
+		update: <T extends WithId>(item: Partial<T> & WithId) => ({
+			item,
+			type: ListActionType.Update,
+			store,
+		}),
+		remove: (id: string) => ({
+			id,
+			type: ListActionType.Remove,
+			store,
+		}),
+		clear: () => ({
+			type: ListActionType.Clear,
+			store,
+		}),
+	};
+}

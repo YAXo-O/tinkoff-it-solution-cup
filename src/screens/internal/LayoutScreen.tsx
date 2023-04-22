@@ -18,7 +18,7 @@ import { isPresent } from '@app/entities/service/Nullable';
 import { itemActionFactory } from '@app/store/actions/ItemActions';
 import { CardPane } from '@app/components/Cards/CardPane';
 import { listActionFactory } from '@app/store/actions/ListActions';
-import { ExpansesPane } from '@app/components/Expanses/ExpansesPane';
+import { ExpensesPane } from '@app/components/Expanses/ExpensesPane';
 
 export const LayoutScreen: React.FC = () => {
 	const user = useSelector((state: AppState) => state.user.item);
@@ -55,7 +55,8 @@ export const LayoutScreen: React.FC = () => {
 								onClick={() => {
 									dispatch(itemActionFactory('user').clear());
 									dispatch(itemActionFactory('card').clear());
-									dispatch(listActionFactory.clear());
+									dispatch(listActionFactory('cards').clear());
+									dispatch(listActionFactory('expenses').clear());
 								}}
 							>
 								Сменить пользователя
@@ -70,7 +71,7 @@ export const LayoutScreen: React.FC = () => {
 						<CardPane />
 					</Grid>
 					<Grid item xs={12} md={6}>
-						<ExpansesPane />
+						<ExpensesPane />
 					</Grid>
 				</Grid>
 			</Container>

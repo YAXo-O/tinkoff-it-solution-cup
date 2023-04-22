@@ -49,7 +49,7 @@ export const CardPane: React.FC = () => {
 					}}
 					startIcon={<AddIcon />}
 					onClick={() => {
-						dispatch(listActionFactory.push(getDefaultCard()));
+						dispatch(listActionFactory('cards').push(getDefaultCard()));
 					}}
 				>
 					Добавить
@@ -66,8 +66,8 @@ export const CardPane: React.FC = () => {
 										item={item}
 										selected={item.id === selected?.id}
 										onSelect={() => dispatch(itemActionFactory('card').set(item))}
-										onChange={(item: Partial<Card> & WithId) => dispatch(listActionFactory.update(item))}
-										onDelete={() => dispatch(listActionFactory.remove(item.id))}
+										onChange={(item: Partial<Card> & WithId) => dispatch(listActionFactory('cards').update(item))}
+										onDelete={() => dispatch(listActionFactory('cards').remove(item.id))}
 									/>
 								))) : <Typography>Список карт пуст</Typography>
 					}
