@@ -1,3 +1,5 @@
+import { v4 } from 'uuid';
+
 import { WithId } from '@app/entities/service/WithId';
 import { Nullable } from '@app/entities/service/Nullable';
 
@@ -22,4 +24,13 @@ export function toString(type: CardType): string {
 	default:
 		return 'Неизвестный тип карты';
 	}
+}
+
+export function getDefaultCard(): Card {
+	return {
+		id: v4(),
+		name: '',
+		limit: null,
+		type: CardType.Debit,
+	};
 }

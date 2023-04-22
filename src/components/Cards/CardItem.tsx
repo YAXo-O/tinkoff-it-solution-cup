@@ -2,16 +2,25 @@ import * as React from 'react';
 
 import ListItemText from '@mui/material/ListItemText';
 import ListItem from '@mui/material/ListItem';
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import Chip from '@mui/material/Chip';
 
 import { indigo } from '@mui/material/colors';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-import { Card, toString } from '@app/entities/Card';
+import { Card, toString, CardType } from '@app/entities/Card';
+import { WithId } from '@app/entities/service/WithId';
 
 interface CardItemProps {
 	item: Card;
 
 	selected: boolean;
 	onSelect: () => void;
+
+	onChange: (item: Partial<Card> & WithId) => void;
+	onDelete: () => void;
 }
 
 export const CardItem: React.FC<CardItemProps> = (props: CardItemProps) => {
@@ -32,10 +41,62 @@ export const CardItem: React.FC<CardItemProps> = (props: CardItemProps) => {
 				},
 			}}
 			onClick={() => props.onSelect()}
+			secondaryAction={(
+				<IconButton
+					edge="end"
+					onClick={props.onDelete}
+				>
+					<DeleteIcon />
+				</IconButton>
+			)}
 		>
 			<ListItemText
-				primary={props.item.name}
-				secondary={toString(props.item.type)}
+				primary={(
+					<TextField
+						value={props.item.name}
+						onChange={
+							(event: React.ChangeEvent<HTMLInputElement>) =>
+								props.onChange({ id: props.item.id, name: event.currentTarget.value })
+						}
+						placeholder="Название Карты"
+						size="small"
+						sx={{
+							'& .MuiInputBase-root': {
+								padding: 0,
+
+								fieldset: {
+									border: 'none',
+								},
+							},
+
+							'& .MuiInputBase-input': {
+								padding: 0,
+							},
+
+							'&:hover': {
+								'.MuiInputBase-input': {
+									backgroundColor: indigo['100'],
+								},
+							},
+						}}
+					/>
+				)}
+				secondary={(
+					<Stack direction="row" spacing={1}>
+						<Chip
+							label={toString(CardType.Debit)}
+							variant={props.item.type === CardType.Debit ? 'filled' : 'outlined'}
+							size="small"
+							onClick={() => props.onChange({ id: props.item.id, type: CardType.Debit })}
+						/>
+						<Chip
+							label={toString(CardType.Credit)}
+							variant={props.item.type === CardType.Credit ? 'filled' : 'outlined'}
+							onClick={() => props.onChange({ id: props.item.id, type: CardType.Credit })}
+							size="small"
+						/>
+					</Stack>
+				)}
 			/>
 		</ListItem>
 	);

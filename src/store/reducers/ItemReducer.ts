@@ -14,11 +14,6 @@ export function itemReducer<T>(_state: Optional<ItemState<T>>, action: Action): 
 			item: action.item,
 		};
 
-	case ItemActionType.Clear:
-		return {
-			item: null,
-		};
-
 	case ItemActionType.Update:
 		if (!isPresent(state.item)) return state;
 
@@ -27,6 +22,11 @@ export function itemReducer<T>(_state: Optional<ItemState<T>>, action: Action): 
 				...state.item,
 				...action.item,
 			},
+		};
+
+	case ItemActionType.Clear:
+		return {
+			item: null,
 		};
 
 	default:
