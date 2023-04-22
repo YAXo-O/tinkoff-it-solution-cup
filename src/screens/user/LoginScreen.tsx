@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { orange, indigo } from '@mui/material/colors';
+import { indigo } from '@mui/material/colors';
 
 import LoginIcon from '@mui/icons-material/Login';
 
@@ -42,7 +42,6 @@ export const LoginScreen: React.FC = () => {
 			initialValues={initial}
 			validationSchema={schema}
 			onSubmit={(values: FormValues) => {
-				console.log('Submitting: ', values);
 				dispatch(itemActionFactory.set(values));
 			}}
 		>
@@ -60,7 +59,7 @@ export const LoginScreen: React.FC = () => {
 							borderTopRightRadius: 4,
 							borderBottomRightRadius: 4,
 							borderLeft: 4,
-							borderColor: orange['500'],
+							borderColor: indigo['800'],
 							backgroundColor: indigo['50'],
 							p: 2,
 							maxWidth: 320,
