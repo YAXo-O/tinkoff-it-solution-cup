@@ -53,6 +53,7 @@ export const CardItem: React.FC<CardItemProps> = (props: CardItemProps) => {
 			<ListItemText
 				primary={(
 					<TextField
+						fullWidth
 						value={props.item.name}
 						onChange={
 							(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -82,7 +83,7 @@ export const CardItem: React.FC<CardItemProps> = (props: CardItemProps) => {
 					/>
 				)}
 				secondary={(
-					<Stack direction="row" spacing={1}>
+					<Stack direction="row" spacing={1} sx={{ py: 1 }}>
 						<Chip
 							label={toString(CardType.Debit)}
 							variant={props.item.type === CardType.Debit ? 'filled' : 'outlined'}
