@@ -1,13 +1,11 @@
 import { Action } from 'redux';
 
 import { ItemState } from '@app/store/states/ItemState';
-import { isItemAction, ItemActionType } from '@app/store/actions/ItemActions';
+import { isItemAction, ItemActionType, ItemAction } from '@app/store/actions/ItemActions';
 import { isPresent, Optional } from '@app/entities/service/Nullable';
+import { AppState } from '@app/store/states/AppState';
 
-export function itemReducer<T>(_state: Optional<ItemState<T>>, action: Action): ItemState<T> {
-	const state: ItemState<T> = _state ?? { item: null };
-	if (!isItemAction<T>(action)) return state;
-
+function itemReducer<T>(state: ItemState<T>, action: ItemAction<T>): ItemState<T> {
 	switch (action.type) {
 	case ItemActionType.Set:
 		return {
@@ -32,4 +30,15 @@ export function itemReducer<T>(_state: Optional<ItemState<T>>, action: Action): 
 	default:
 		return state;
 	}
+}
+
+export function itemReducerFactory<T>(store: keyof AppState) {
+	return (_state: Optional<ItemState<T>>, action: Action) => {
+		const state: ItemState<T> = _state ?? { item: null };
+		if (!isItemAction<T>(action)) return state;
+
+		if (store !== action.store) return state;
+
+		return itemReducer(state, action);
+	};
 }

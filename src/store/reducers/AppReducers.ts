@@ -1,7 +1,7 @@
 import { Reducer, Action } from 'redux';
 
 import { AppState } from '@app/store/states/AppState';
-import { itemReducer } from '@app/store/reducers/ItemReducer';
+import { itemReducerFactory } from '@app/store/reducers/ItemReducer';
 import { User } from '@app/entities/User';
 import { Card } from '@app/entities/Card';
 import { listReducer } from '@app/store/reducers/ListReducers';
@@ -11,6 +11,8 @@ export type AppReducers = {
 }
 
 export const appReducers: AppReducers = {
-	user: itemReducer<User>,
+	user: itemReducerFactory<User>('user'),
+	card: itemReducerFactory<Card>('card'),
+
 	cards: listReducer<Card>,
 };

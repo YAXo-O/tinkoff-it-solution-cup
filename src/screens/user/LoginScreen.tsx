@@ -42,7 +42,7 @@ export const LoginScreen: React.FC = () => {
 			initialValues={initial}
 			validationSchema={schema}
 			onSubmit={(values: FormValues) => {
-				dispatch(itemActionFactory.set(values));
+				dispatch(itemActionFactory('user').set(values));
 			}}
 		>
 			<Form>

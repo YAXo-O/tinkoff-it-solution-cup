@@ -52,7 +52,8 @@ export const LayoutScreen: React.FC = () => {
 								}}
 								startIcon={<LogoutIcon />}
 								onClick={() => {
-									dispatch(itemActionFactory.clear());
+									dispatch(itemActionFactory('user').clear());
+									dispatch(itemActionFactory('card').clear());
 									dispatch(listActionFactory.clear());
 								}}
 							>
