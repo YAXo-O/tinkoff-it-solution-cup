@@ -58,16 +58,18 @@ export const CardPane: React.FC = () => {
 			<Box sx={{ p: 2 }}>
 				<List dense>
 					{
-						cards.map((item: Card) => (
-							<CardItem
-								key={item.id}
-								item={item}
-								selected={item.id === selected?.id}
-								onSelect={() => dispatch(itemActionFactory('card').set(item))}
-								onChange={(item: Partial<Card> & WithId) => dispatch(listActionFactory.update(item))}
-								onDelete={() => dispatch(listActionFactory.remove(item.id))}
-							/>
-						))
+						cards.length
+							? (
+								cards.map((item: Card) => (
+									<CardItem
+										key={item.id}
+										item={item}
+										selected={item.id === selected?.id}
+										onSelect={() => dispatch(itemActionFactory('card').set(item))}
+										onChange={(item: Partial<Card> & WithId) => dispatch(listActionFactory.update(item))}
+										onDelete={() => dispatch(listActionFactory.remove(item.id))}
+									/>
+								))) : <Typography>Список карт пуст</Typography>
 					}
 				</List>
 			</Box>
