@@ -5,6 +5,19 @@ const paths = require('./paths.js');
 
 const prod = process.env.NODE_ENV === 'production';
 
+const postCSSLoader = {
+	loader: 'postcss-loader',
+	options: {
+		postcssOptions: {
+			plugins: [
+				'postcss-preset-env',
+				'autoprefixer',
+			],
+			sourceMap: true,
+		},
+	},
+};
+
 module.exports = {
 	mode: prod ? 'production' : 'development',
 	entry: paths.input,
@@ -23,7 +36,7 @@ module.exports = {
 			},
 			{
 				test: /\.css$/,
-				use: [MiniCssExtractPlugin.loader, 'css-loader'],
+				use: [MiniCssExtractPlugin.loader, 'css-loader', postCSSLoader],
 			},
 		]
 	},
