@@ -67,8 +67,6 @@ export const ExpenseItem: React.FC<ExpenseItemProps> = (props: ExpenseItemProps)
 						fullWidth
 						value={props.item.amount}
 						onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-							console.log(event.currentTarget.value);
-
 							let value = +event.currentTarget.value;
 							if (Number.isNaN(value)) {
 								value = 0;

@@ -27,6 +27,14 @@ export const CardPane: React.FC = () => {
 			sx={{
 				borderTopLeftRadius: 8,
 				borderBottomLeftRadius: 8,
+				borderTopRightRadius: {
+					md: 0,
+					xs: 8,
+				},
+				borderBottomRightRadius: {
+					md: 0,
+					xs: 8,
+				},
 				backgroundColor: indigo['100'],
 				overflow: 'hidden',
 			}}

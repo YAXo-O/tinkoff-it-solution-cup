@@ -30,8 +30,17 @@ export const ExpensesPane: React.FC = () => {
 			sx={{
 				borderTopRightRadius: 8,
 				borderBottomRightRadius: 8,
+				borderTopLeftRadius: {
+					md: 0,
+					xs: 8,
+				},
+				borderBottomLeftRadius: {
+					md: 0,
+					xs: 8,
+				},
 				backgroundColor: indigo['100'],
 				overflow: 'hidden',
+
 			}}
 		>
 			<Toolbar
