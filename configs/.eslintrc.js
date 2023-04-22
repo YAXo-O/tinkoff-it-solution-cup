@@ -11,9 +11,7 @@ module.exports = {
 		'import/resolver': {
 			alias: {
 				map: [
-					['@app', './ClientApp'],
-					['@common', './common'],
-					['@images', './ClientApp/images'],
+					['@app', './src'],
 				],
 				extensions: ['.js', '.ts', '.tsx'],
 			},
@@ -49,6 +47,7 @@ module.exports = {
 			rules: {
 				'no-underscore-dangle': 'off',
 				'react/jsx-props-no-multi-spaces': 'off',
+				'react/function-component-definition': 'off',
 			},
 		},
 	],
@@ -118,7 +117,7 @@ module.exports = {
 			},
 		],
 
-		'react/state-in-constructor': ['error', 'never'], // Forbid setting state in constructor - specify with prop setter
+		'react/state-in-constructor': ['error', 'never'], // Forbid setting states in constructor - specify with prop setter
 		'react/jsx-indent': ['error', 'tab', { checkAttributes: true, indentLogicalExpressions: true }], // Ident .jsx nodes with tabs
 		'react/jsx-indent-props': ['error', 'tab'], // Ident .jsx node props with tabs
 		'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
