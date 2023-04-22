@@ -17,6 +17,7 @@ import { AppState } from '@app/store/states/AppState';
 import { isPresent } from '@app/entities/service/Nullable';
 import { itemActionFactory } from '@app/store/actions/ItemActions';
 import { CardPane } from '@app/components/Cards/CardPane';
+import { listActionFactory } from '@app/store/actions/ListActions';
 
 export const LayoutScreen: React.FC = () => {
 	const user = useSelector((state: AppState) => state.user.item);
@@ -50,7 +51,10 @@ export const LayoutScreen: React.FC = () => {
 									px: 1,
 								}}
 								startIcon={<LogoutIcon />}
-								onClick={() => dispatch(itemActionFactory.clear())}
+								onClick={() => {
+									dispatch(itemActionFactory.clear());
+									dispatch(listActionFactory.clear());
+								}}
 							>
 								Сменить пользователя
 							</Button>
