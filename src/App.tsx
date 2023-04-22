@@ -1,11 +1,12 @@
 import * as React from 'react';
 
-import '@styles/styles.css';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 export const App: React.FC = () => {
 	return (
-		<div>
-			Hello, World!
-		</div>
+		<Box>
+			<Typography>Hello, MUI!</Typography>
+		</Box>
 	);
 };
